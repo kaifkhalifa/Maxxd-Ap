@@ -6,6 +6,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import WorkoutPlanGenerator from '@/components/WorkoutPlanGenerator';
 
 type Message = {
   id: string;
@@ -14,8 +15,18 @@ type Message = {
   timestamp: Date;
 };
 
+enum AICoachTab {
+  CHAT = 'chat',
+  WORKOUT = 'workout',
+  MEAL_PLAN = 'meal',
+  GOALS = 'goals',
+}
+
 export default function AICoachScreen() {
   const colorScheme = useColorScheme() || 'dark';
+  const colors = Colors[colorScheme];
+  const [activeTab, setActiveTab] = useState<AICoachTab>(AICoachTab.CHAT);
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -25,7 +36,6 @@ export default function AICoachScreen() {
     },
   ]);
   const [inputText, setInputText] = useState('');
-  const colors = Colors[colorScheme];
 
   const handleSendMessage = () => {
     if (!inputText.trim()) return;
@@ -71,6 +81,102 @@ export default function AICoachScreen() {
     }
   };
 
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case AICoachTab.WORKOUT:
+        return <WorkoutPlanGenerator />;
+      case AICoachTab.MEAL_PLAN:
+        return (
+          <View style={styles.comingSoonContainer}>
+            <Ionicons name="nutrition" size={60} color={colors.tint} style={styles.comingSoonIcon} />
+            <ThemedText style={styles.comingSoonTitle}>Meal Plans Coming Soon</ThemedText>
+            <ThemedText style={styles.comingSoonText}>
+              AI-generated meal plans tailored to your fitness goals and dietary preferences
+            </ThemedText>
+          </View>
+        );
+      case AICoachTab.GOALS:
+        return (
+          <View style={styles.comingSoonContainer}>
+            <Ionicons name="trophy" size={60} color={colors.tint} style={styles.comingSoonIcon} />
+            <ThemedText style={styles.comingSoonTitle}>Goal Tracking Coming Soon</ThemedText>
+            <ThemedText style={styles.comingSoonText}>
+              Set, track, and achieve your goals with AI-powered insights and accountability
+            </ThemedText>
+          </View>
+        );
+      case AICoachTab.CHAT:
+      default:
+        return renderChatTab();
+    }
+  };
+
+  const renderChatTab = () => {
+    return (
+      <>
+        <ScrollView
+          style={styles.messagesContainer}
+          contentContainerStyle={styles.messagesContent}
+          showsVerticalScrollIndicator={false}>
+          {messages.map((message) => (
+            <View
+              key={message.id}
+              style={[
+                styles.messageBubble,
+                message.sender === 'user'
+                  ? styles.userMessage
+                  : styles.aiMessage,
+              ]}>
+              {message.sender === 'ai' && (
+                <View style={styles.aiAvatar}>
+                  <Ionicons name="fitness" size={20} color="#FFFFFF" />
+                </View>
+              )}
+              <View
+                style={[
+                  styles.messageContent,
+                  message.sender === 'user'
+                    ? styles.userMessageContent
+                    : styles.aiMessageContent,
+                ]}>
+                <ThemedText style={styles.messageText}>{message.text}</ThemedText>
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+
+        <View style={styles.premiumBanner}>
+          <Ionicons name="diamond" size={20} color={colors.accent} />
+          <ThemedText style={styles.premiumText}>
+            Upgrade to Maxx Mode for unlimited AI coaching
+          </ThemedText>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Ask your AI Coach..."
+            placeholderTextColor="rgba(255, 255, 255, 0.4)"
+            value={inputText}
+            onChangeText={setInputText}
+            multiline
+            maxLength={500}
+          />
+          <TouchableOpacity
+            style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
+            onPress={handleSendMessage}
+            disabled={!inputText.trim()}>
+            <Ionicons
+              name="send"
+              size={24}
+              color={inputText.trim() ? colors.tint : 'rgba(255, 255, 255, 0.3)'}
+            />
+          </TouchableOpacity>
+        </View>
+      </>
+    );
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -79,67 +185,91 @@ export default function AICoachScreen() {
       <ThemedView style={styles.header}>
         <ThemedText type="title">AI Maxx Coach</ThemedText>
         <ThemedText>Get personalized advice to level up your life</ThemedText>
+        
+        <View style={styles.tabsContainer}>
+          <TouchableOpacity
+            style={[
+              styles.tab,
+              activeTab === AICoachTab.CHAT && styles.activeTab
+            ]}
+            onPress={() => setActiveTab(AICoachTab.CHAT)}>
+            <Ionicons
+              name="chatbubble"
+              size={20}
+              color={activeTab === AICoachTab.CHAT ? colors.tint : colors.tabIconDefault}
+            />
+            <ThemedText
+              style={[
+                styles.tabText,
+                activeTab === AICoachTab.CHAT && styles.activeTabText
+              ]}>
+              Chat
+            </ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            style={[
+              styles.tab,
+              activeTab === AICoachTab.WORKOUT && styles.activeTab
+            ]}
+            onPress={() => setActiveTab(AICoachTab.WORKOUT)}>
+            <Ionicons
+              name="fitness"
+              size={20}
+              color={activeTab === AICoachTab.WORKOUT ? colors.tint : colors.tabIconDefault}
+            />
+            <ThemedText
+              style={[
+                styles.tabText,
+                activeTab === AICoachTab.WORKOUT && styles.activeTabText
+              ]}>
+              Workouts
+            </ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            style={[
+              styles.tab,
+              activeTab === AICoachTab.MEAL_PLAN && styles.activeTab
+            ]}
+            onPress={() => setActiveTab(AICoachTab.MEAL_PLAN)}>
+            <Ionicons
+              name="nutrition"
+              size={20}
+              color={activeTab === AICoachTab.MEAL_PLAN ? colors.tint : colors.tabIconDefault}
+            />
+            <ThemedText
+              style={[
+                styles.tabText,
+                activeTab === AICoachTab.MEAL_PLAN && styles.activeTabText
+              ]}>
+              Meals
+            </ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            style={[
+              styles.tab,
+              activeTab === AICoachTab.GOALS && styles.activeTab
+            ]}
+            onPress={() => setActiveTab(AICoachTab.GOALS)}>
+            <Ionicons
+              name="trophy"
+              size={20}
+              color={activeTab === AICoachTab.GOALS ? colors.tint : colors.tabIconDefault}
+            />
+            <ThemedText
+              style={[
+                styles.tabText,
+                activeTab === AICoachTab.GOALS && styles.activeTabText
+              ]}>
+              Goals
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
       </ThemedView>
 
-      <ScrollView
-        style={styles.messagesContainer}
-        contentContainerStyle={styles.messagesContent}
-        showsVerticalScrollIndicator={false}>
-        {messages.map((message) => (
-          <View
-            key={message.id}
-            style={[
-              styles.messageBubble,
-              message.sender === 'user'
-                ? styles.userMessage
-                : styles.aiMessage,
-            ]}>
-            {message.sender === 'ai' && (
-              <View style={styles.aiAvatar}>
-                <Ionicons name="fitness" size={20} color="#FFFFFF" />
-              </View>
-            )}
-            <View
-              style={[
-                styles.messageContent,
-                message.sender === 'user'
-                  ? styles.userMessageContent
-                  : styles.aiMessageContent,
-              ]}>
-              <ThemedText style={styles.messageText}>{message.text}</ThemedText>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
-
-      <View style={styles.premiumBanner}>
-        <Ionicons name="diamond" size={20} color={colors.accent} />
-        <ThemedText style={styles.premiumText}>
-          Upgrade to Maxx Mode for unlimited AI coaching
-        </ThemedText>
-      </View>
-
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Ask your AI Coach..."
-          placeholderTextColor="rgba(255, 255, 255, 0.4)"
-          value={inputText}
-          onChangeText={setInputText}
-          multiline
-          maxLength={500}
-        />
-        <TouchableOpacity
-          style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
-          onPress={handleSendMessage}
-          disabled={!inputText.trim()}>
-          <Ionicons
-            name="send"
-            size={24}
-            color={inputText.trim() ? colors.tint : 'rgba(255, 255, 255, 0.3)'}
-          />
-        </TouchableOpacity>
-      </View>
+      {renderTabContent()}
     </KeyboardAvoidingView>
   );
 }
@@ -151,7 +281,29 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 10,
+  },
+  tabsContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  activeTab: {
+    backgroundColor: 'rgba(66, 133, 244, 0.1)',
+  },
+  tabText: {
+    fontSize: 12,
+    marginTop: 4,
+  },
+  activeTabText: {
+    color: '#4285F4',
+    fontWeight: '600',
   },
   messagesContainer: {
     flex: 1,
@@ -239,5 +391,27 @@ const styles = StyleSheet.create({
   },
   sendButtonDisabled: {
     opacity: 0.5,
+  },
+  comingSoonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+  },
+  comingSoonIcon: {
+    marginBottom: 20,
+    opacity: 0.8,
+  },
+  comingSoonTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  comingSoonText: {
+    fontSize: 16,
+    textAlign: 'center',
+    opacity: 0.7,
+    lineHeight: 24,
   },
 }); 
