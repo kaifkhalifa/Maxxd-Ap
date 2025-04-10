@@ -1,21 +1,24 @@
 {
   "expo": {
-    "name": "Maxxd",
+    "name": "Maxx'd",
     "slug": "Maxxd",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "scheme": "maxxd",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "description": "Maxx'd - Glow up your entire life. A gamified self-improvement platform to track and level up in 7 key life areas.",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.maxxd.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#121212"
+      },
+      "package": "com.maxxd.app"
     },
     "web": {
       "bundler": "metro",
@@ -30,7 +33,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#121212"
         }
       ]
     ],

@@ -1,50 +1,103 @@
-# Welcome to your Expo app 👋
+# Maxx'd - Glow Up Your Entire Life
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Maxx'd is a gamified self-improvement platform where users level up in 7 key life areas:
 
-## Get started
+- Health 🏋️
+- Wealth 💸
+- Style 💅
+- Mind 🧠
+- Social 💬
+- Spiritual 🙏
+- Productivity ⏰
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+### Life Domains
+Each user levels up in the 7 life domains with habits, tasks, and goals.
 
-2. Start the app
+### XP & Scorecard System
+- Each completed task earns XP in its category
+- Weekly progress reports
+- Users progress from Bronze → Silver → Gold → Maxx'd
 
-   ```bash
-    npx expo start
-   ```
+### Daily/Weekly Quests
+- Actionable tasks like "Wake up before 8 AM 3 days this week" or "Try a new outfit"
+- Personalized by AI or chosen from quest bank
+- Seasonal glow-up badges and streaks
 
-In the output, you'll find options to open the app in a
+### Glow-Up Tracker
+- Log your journey with before/after photos, journals, and metrics
+- Timeline view of growth over time
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### AI Maxx Coach (Premium)
+- AI chat-based coach that provides:
+  - Personal growth plans
+  - Habit suggestions
+  - Life advice
+  - Weekly check-ins
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Community & Challenges
+- Share posts, join challenges, cheer each other on
+- Reactions like 🔥 "Maxxed," 💯 "Truth," 🚀 "Growth"
+- Option for anonymous posting
 
-## Get a fresh project
+## Getting Started
 
-When you're ready, run:
+### Prerequisites
+- Node.js
+- npm or yarn
+- Expo CLI
 
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run reset-project
+git clone https://github.com/yourusername/maxxd.git
+cd Maxxd
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Learn more
+3. Start the development server:
+```bash
+npm start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+4. Use the Expo Go app on your device to scan the QR code and open the app
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Built With
 
-## Join the community
+- [React Native](https://reactnative.dev/) - The mobile framework used
+- [Expo](https://expo.dev/) - Development platform
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [React Native Paper](https://callstack.github.io/react-native-paper/) - UI components
 
-Join our community of developers creating universal apps.
+## Monetization
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Free Version
+- Fully usable app with quests, tracking, and community access
+- Tasteful ads only (native + sponsor content)
+
+### Premium: Maxx Mode ($4.99/mo)
+- Ad-free experience
+- Full access to AI coach
+- Unlimited glow-up logs
+- Deeper analytics + insights
+- VIP challenges and rewards
+- Style selfie analysis
+- Avatar customization
+
+## Screenshots
+
+*Coming soon*
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Inspirations: RPG games, self-improvement literature, social fitness apps
